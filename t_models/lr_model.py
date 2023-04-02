@@ -6,6 +6,9 @@ import pickle
 
 warnings.simplefilter("ignore")
 
+
+# Preprocessed dataset to train the model
+
 df_comb = pd.read_csv("Dataset/dis_sym_dataset_comb.csv") # Disease combination
 df_norm = pd.read_csv("Dataset/dis_sym_dataset_norm.csv") # Individual Disease
 
@@ -14,8 +17,11 @@ Y = df_comb.iloc[:, 0:1]
 
 dataset_symptoms = list(X.columns)
 
+#training the model
+
 lr = LogisticRegression()
 lr = lr.fit(X, Y)
 scores = cross_val_score(lr, X, Y, cv=5)
 
+# Dumping the trained model into a pickel file.
 pickle.dump(lr, open('flsk_api\model.pkl','wb'))
